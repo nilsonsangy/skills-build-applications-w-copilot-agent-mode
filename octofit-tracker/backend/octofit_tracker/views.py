@@ -28,6 +28,8 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 def api_root(request, format=None):
     base_url = 'https://hiny-computing-machine-pgqjpxjxw9h9rpx-8000.app.github.dev/'
+    if settings.DEBUG:
+        base_url = 'http://localhost:8000/'
     return Response({
         'users': base_url + 'api/users/',
         'teams': base_url + 'api/teams/',
