@@ -16,7 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.http import JsonResponse
 from .views import UserViewSet, TeamViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet
+
+def api_root(request):
+    return JsonResponse({
+        "message": "Welcome to the Monafit Tracker API!",
+        "endpoints": {
+            "admin": "/admin/",
+            "api": "/api/"
+        }
+    })
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -26,6 +36,7 @@ router.register(r'leaderboard', LeaderboardViewSet)
 router.register(r'workouts', WorkoutViewSet)
 
 urlpatterns = [
+    path('', api_root, name='api-root'),  # Root endpoint
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
 ]

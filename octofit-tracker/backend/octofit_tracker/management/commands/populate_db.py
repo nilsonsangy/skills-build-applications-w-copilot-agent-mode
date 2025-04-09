@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from monafit_tracker.models import User, Team, Activity, Leaderboard, Workout
+from octofit_tracker.models import User, Team, Activity, Leaderboard, Workout
 from bson import ObjectId
 from datetime import timedelta
 
@@ -22,9 +22,14 @@ class Command(BaseCommand):
         User.objects.bulk_create(users)
 
         # Create teams
-        team = Team(_id=ObjectId(), name='Team Alpha')
-        team.save()
-        team.members.add(*users)
+        team_blue = Team(_id=ObjectId(), name='Blue Team')
+        team_blue.save()
+        team_gold = Team(_id=ObjectId(), name='Gold Team')
+        team_gold.save()
+
+        # Add members to teams
+        team_blue.members.add(*users)
+        team_gold.members.add(*users)
 
         # Create activities
         activities = [
